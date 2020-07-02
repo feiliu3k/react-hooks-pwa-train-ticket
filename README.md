@@ -1,3 +1,9 @@
 # react-hooks-pwa-train-ticket
 
-react + hooks + redux + pwa 单页应用
+#### 环境安装
+
+> yarn install
+
+#### 技术栈
+
+> react + hooks + redux + pwa 单页应用
