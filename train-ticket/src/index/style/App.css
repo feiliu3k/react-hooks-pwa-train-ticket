@@ -1,0 +1,11 @@
+.header-wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 2;
+}
+.form {
+	padding: 5px 8px;
+	background-color: #fff;
+}

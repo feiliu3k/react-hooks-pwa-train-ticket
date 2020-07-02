@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, memo } from 'react'
 import PropTypes from 'prop-types'
 import './style/Header.css'
 
-const Header = props => {
+const Header = memo(props => {
 	const { title, onBack } = props
 	return (
 		<div className='header'>
@@ -14,7 +14,7 @@ const Header = props => {
 			<h1 className='header-title'>{title}</h1>
 		</div>
 	)
-}
+})
 
 Header.propTypes = {
 	title: PropTypes.string.isRequired,
