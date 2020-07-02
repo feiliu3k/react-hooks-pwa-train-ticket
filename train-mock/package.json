@@ -1,0 +1,19 @@
+{
+	"name": "train-mock",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"serve": "nodemon ./index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@koa/router": "^9.0.1",
+		"http-proxy-middleware": "^1.0.4",
+		"koa": "^2.13.0",
+		"koa-body": "^4.2.0"
+	}
+}

@@ -1,0 +1,17 @@
+@JSON = content-type: application/json
+@BASEURL = http://localhost:3001
+
+###
+GET {{BASEURL}}?username=小小&age=14
+
+
+###
+
+POST {{BASEURL}}/register
+{{JSON}}
+
+{
+    "username": "大是大非",
+    "pwd": "123456"
+
+}
