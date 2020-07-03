@@ -117,9 +117,10 @@ export function fetchCityData() {
 			return
 		}
 		dispatch(setIsLoadingCityData(true))
-		fetch('/rest/cities?_' + Date.now())
+		fetch('/api/rest/cities?_' + Date.now())
 			.then(res => res.json())
 			.then(cityData => {
+				console.log(cityData, 'cityData')
 				localStorage.setItem('city_data_cache', JSON.stringify({ expire: Date.now() + 60 * 1000, data: cityData }))
 				dispatch(setCityData(cityData))
 				dispatch(setIsLoadingCityData(false))
