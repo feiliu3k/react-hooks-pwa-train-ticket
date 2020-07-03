@@ -106,3 +106,24 @@ export function setDepartDate(departDate) {
 		payload: departDate,
 	}
 }
+
+export function fetchCityData() {
+	return (dispatch, getState) => {
+		const { isLoadingCityData } = getState()
+		if (isLoadingCityData) return
+		const caches = JSON.parse(localStorage.getItem('city_data_cache') || '{}')
+		if (Date.now() < caches.expire) {
+			dispatch(setCityData(caches.data))
+			return
+		}
+		dispatch(setIsLoadingCityData(true))
+		fetch('/rest/cities?_' + Date.now())
+			.then(res => res.json())
+			.then(cityData => {
+				localStorage.setItem('city_data_cache', JSON.stringify({ expire: Date.now() + 60 * 1000, data: cityData }))
+				dispatch(setCityData(cityData))
+				dispatch(setIsLoadingCityData(false))
+			})
+			.catch(err => dispatch(setIsLoadingCityData(false)))
+	}
+}

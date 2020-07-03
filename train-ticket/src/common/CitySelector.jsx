@@ -4,11 +4,15 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 const CitySelector = props => {
-	const { show, cityData, isLoading, onBack } = props
+	const { show, cityData, isLoading, onBack, fetchCityData } = props
 	const [searchKey, setSearchKey] = useState('')
 	const key = useMemo(() => {
 		return searchKey.trim()
 	}, [searchKey])
+	useEffect(() => {
+		if (cityData || isLoading || !show) return
+		fetchCityData()
+	}, [cityData, isLoading, show])
 	return (
 		<div className={classNames('city-selector', { hidden: !show })}>
 			<div className='city-search'>

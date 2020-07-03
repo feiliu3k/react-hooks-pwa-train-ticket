@@ -10,7 +10,7 @@ import HighSpeed from './HighSpeed'
 import Submit from './Submit'
 import CitySelector from '../common/CitySelector'
 function App(props) {
-	const { from, to, isCitySelectorVisible, cityData, isLoadingCityData, dispatch } = props
+	const { from, to, isCitySelectorVisible, cityData, isLoadingCityData, fetchCityData, dispatch } = props
 	const [count, setCount] = useState(0)
 	const onBack = useCallback(() => {
 		window.history.back()
@@ -26,7 +26,7 @@ function App(props) {
 		return bindActionCreators({ exchangeFromTo, showCitySelector }, dispatch)
 	}, [])
 	const citySelectorCbs = useMemo(() => {
-		return bindActionCreators({ onBack: hideCitySelector }, dispatch)
+		return bindActionCreators({ onBack: hideCitySelector, fetchCityData }, dispatch)
 	}, [])
 	return (
 		<div>
