@@ -2,14 +2,15 @@ import React, { useState, useCallback, useMemo } from 'react'
 import './style/App.css'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { exchangeFromTo, showCitySelector } from './actions'
+import { exchangeFromTo, showCitySelector, hideCitySelector } from './actions'
 import Header from '../common/Header'
 import Journey from './Journey'
 import DepartDate from './DepartDate'
 import HighSpeed from './HighSpeed'
 import Submit from './Submit'
+import CitySelector from '../common/CitySelector'
 function App(props) {
-	const { from, to, dispatch } = props
+	const { from, to, isCitySelectorVisible, cityData, isLoadingCityData, dispatch } = props
 	const [count, setCount] = useState(0)
 	const onBack = useCallback(() => {
 		window.history.back()
@@ -24,6 +25,9 @@ function App(props) {
 	const cbs = useMemo(() => {
 		return bindActionCreators({ exchangeFromTo, showCitySelector }, dispatch)
 	}, [])
+	const citySelectorCbs = useMemo(() => {
+		return bindActionCreators({ onBack: hideCitySelector }, dispatch)
+	}, [])
 	return (
 		<div>
 			<div className='header-wrapper'>
@@ -37,6 +41,7 @@ function App(props) {
 				<HighSpeed />
 				<Submit />
 			</form>
+			<CitySelector show={isCitySelectorVisible} cityData={cityData} isLoading={isLoadingCityData} {...citySelectorCbs} />
 		</div>
 	)
 }
@@ -47,7 +52,6 @@ function mapStateToProps(state) {
 	}
 }
 function mapDispatchToProps(dispatch) {
-	console.log(dispatch, '=========dispatch')
 	return {
 		dispatch,
 	}
