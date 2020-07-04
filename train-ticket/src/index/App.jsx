@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react'
 import './style/App.css'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { exchangeFromTo, showCitySelector, hideCitySelector, fetchCityData } from './actions'
+import { exchangeFromTo, showCitySelector, hideCitySelector, fetchCityData, setSelectedCity } from './actions'
 import Header from '../common/Header'
 import Journey from './Journey'
 import DepartDate from './DepartDate'
@@ -26,8 +26,12 @@ function App(props) {
 		return bindActionCreators({ exchangeFromTo, showCitySelector }, dispatch)
 	}, [])
 	const citySelectorCbs = useMemo(() => {
-		return bindActionCreators({ onBack: hideCitySelector, fetchCityData }, dispatch)
+		return bindActionCreators({ onBack: hideCitySelector, fetchCityData, onSelect: setSelectedCity }, dispatch)
 	}, [])
+	// const onSelect = name => {
+	// 	citySelectorCbs.setSelectedCity(name)
+	// 	citySelectorCbs.onBack()
+	// }
 	return (
 		<div>
 			<div className='header-wrapper'>
