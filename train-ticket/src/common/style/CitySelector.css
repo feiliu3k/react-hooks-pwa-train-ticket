@@ -5,6 +5,7 @@
 	z-index: 3;
 	height: 100vh;
 	width: 100vw;
+	padding-top: 44px;
 }
 .city-search {
 	background-color: #1ba9ba;
@@ -39,6 +40,8 @@
 
 .city-list {
 	padding: 0 20px;
+	height: 100%;
+	overflow-y: scroll;
 }
 .city-case {
 }
