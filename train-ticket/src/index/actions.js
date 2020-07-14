@@ -22,7 +22,7 @@ export function setTo(to) {
 }
 export function setIsLoadingCityData(isLoadingCityData) {
 	return {
-		type: ACTION_SET_IS_CITY_SELECTOR_VISIBLE,
+		type: ACTION_SET_IS_LOADING_CITY_DATA,
 		payload: isLoadingCityData,
 	}
 }
@@ -48,6 +48,7 @@ export function toggleHighSpeed() {
 // ACTION_SET_CURRENT_SELECTING_LEFT_CITY
 
 export function showCitySelector(currentSelectingLeftCity) {
+	console.log('showCitySelector---', 'actions')
 	return dispatch => {
 		dispatch({
 			type: ACTION_SET_IS_CITY_SELECTOR_VISIBLE,

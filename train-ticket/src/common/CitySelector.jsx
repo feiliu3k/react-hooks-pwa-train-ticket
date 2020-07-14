@@ -82,6 +82,7 @@ const CitySelector = memo(props => {
 	}, [searchKey])
 	useEffect(() => {
 		if (cityData || isLoading || !show) return
+		console.log('fetchCityData')
 		fetchCityData()
 	}, [cityData, isLoading, show])
 	const toAlpha = useCallback(alpha => {

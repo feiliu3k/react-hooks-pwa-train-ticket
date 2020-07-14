@@ -11,7 +11,6 @@ import Submit from './Submit'
 import CitySelector from '../common/CitySelector'
 function App(props) {
 	const { from, to, isCitySelectorVisible, cityData, isLoadingCityData, dispatch } = props
-	const [count, setCount] = useState(0)
 	const onBack = useCallback(() => {
 		window.history.back()
 	}, [])
