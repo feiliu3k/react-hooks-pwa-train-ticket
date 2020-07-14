@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react'
 import './style/App.css'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { exchangeFromTo, showCitySelector, hideCitySelector, fetchCityData, setSelectedCity } from './actions'
+import { exchangeFromTo, showCitySelector, hideCitySelector, fetchCityData, setSelectedCity, showDateSelector } from './actions'
 import Header from '../common/Header'
 import Journey from './Journey'
 import DepartDate from './DepartDate'
@@ -10,7 +10,7 @@ import HighSpeed from './HighSpeed'
 import Submit from './Submit'
 import CitySelector from '../common/CitySelector'
 function App(props) {
-	const { from, to, isCitySelectorVisible, cityData, isLoadingCityData, dispatch } = props
+	const { from, to, isCitySelectorVisible, cityData, isLoadingCityData, dispatch, departDate } = props
 	const onBack = useCallback(() => {
 		window.history.back()
 	}, [])
@@ -27,6 +27,14 @@ function App(props) {
 	const citySelectorCbs = useMemo(() => {
 		return bindActionCreators({ onBack: hideCitySelector, fetchCityData, onSelect: setSelectedCity }, dispatch)
 	}, [])
+	const datepartSelectorCbs = useMemo(() => {
+		return bindActionCreators(
+			{
+				onClick: showDateSelector,
+			},
+			dispatch
+		)
+	}, [])
 	// const onSelect = name => {
 	// 	citySelectorCbs.setSelectedCity(name)
 	// 	citySelectorCbs.onBack()
@@ -40,7 +48,7 @@ function App(props) {
 			<form className='form'>
 				{/* <Journey from={from} to={to} exchangeFromTo={doExChangeFromTo} showCitySelector={doShowCitySelector} /> */}
 				<Journey from={from} to={to} {...cbs} />
-				<DepartDate />
+				<DepartDate time={departDate} {...datepartSelectorCbs} />
 				<HighSpeed />
 				<Submit />
 			</form>

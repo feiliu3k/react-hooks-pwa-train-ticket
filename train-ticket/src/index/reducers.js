@@ -17,7 +17,7 @@ const initialState = {
 	cityData: null,
 	isLoadingCityData: false,
 	isDateSelectorVisible: false,
-	departDate: null,
+	departDate: 0,
 	highSpeed: false, // 是否选择了高铁动车
 }
 
