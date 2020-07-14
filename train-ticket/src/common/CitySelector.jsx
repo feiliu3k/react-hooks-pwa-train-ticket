@@ -3,6 +3,54 @@ import './style/CitySelector.css'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
+const SuggestItem = memo(props => {
+	const { name, onClick } = props
+	return (
+		<li className='city-suggest-item' onClick={() => onClick(name)}>
+			{name}
+		</li>
+	)
+})
+SuggestItem.propTypes = {
+	name: PropTypes.string.isRequired,
+	onClick: PropTypes.func.isRequired,
+}
+const Suggest = memo(props => {
+	const { searchKey, onSelect } = props
+	const [result, setResult] = useState([])
+	useEffect(() => {
+		fetch(`/rest/search?key=${encodeURIComponent(searchKey)}`)
+			.then(res => res.json())
+			.then(data => {
+				console.log(data)
+				if (data.isSuccess && data.data.searchKey === searchKey) {
+					setResult(data.data.cityData)
+				}
+			})
+	}, [searchKey])
+	const fallBackResult = useMemo(() => {
+		if (result.length) {
+			return result
+		} else {
+			return [searchKey]
+		}
+	}, [result, searchKey])
+	return (
+		<div className='city-suggest'>
+			<ul className='city-suggest-ul'>
+				{fallBackResult.map(item => {
+					return <SuggestItem key={item} name={item} onClick={onSelect} />
+				})}
+			</ul>
+		</div>
+	)
+})
+
+Suggest.propTypes = {
+	searchKey: PropTypes.string.isRequired,
+	onSelect: PropTypes.func.isRequired,
+}
+
 const CityItem = memo(function CityItem(props) {
 	const { name, onSelect } = props
 	return (
@@ -115,6 +163,7 @@ const CitySelector = memo(props => {
 						hidden: key.length === 0,
 					})}></i>
 			</div>
+			{Boolean(key) && <Suggest searchKey={key} onSelect={onSelect} />}
 			{outputCitySelectors()}
 		</div>
 	)

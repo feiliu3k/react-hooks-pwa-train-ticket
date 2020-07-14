@@ -61,3 +61,13 @@
 .city-index-item {
 	display: block;
 }
+
+.city-suggest {
+	position: fixed;
+	left: 0;
+	top: 44px;
+	right: 0;
+	bottom: 0;
+	background: #fff;
+	z-index: 2;
+}

@@ -8,6 +8,7 @@ const fs = require('fs')
 const pyfl = require('pyfl').default
 
 app.use(koaBody())
+// 允许跨域请求
 app.use(async (ctx, next) => {
 	ctx.set('Access-Control-Allow-Origin', '*')
 	await next()
@@ -38,6 +39,29 @@ router.get('/rest/cities', (ctx, next) => {
 	ctx.body = {
 		isSuccess: true,
 		data: cityData,
+	}
+})
+router.get('/rest/search', (ctx, next) => {
+	const { key } = ctx.request.query
+	let cityDataJson = fs.readFileSync('./json/cityData.json')
+	cityDataJson = JSON.parse(cityDataJson.toString())
+	const cityData = cityDataJson.reduce((cityData, prop) => {
+		let { citys } = prop
+		citys.forEach(item => {
+			if (item.citysName.includes(key)) {
+				cityData.push(item.citysName)
+			}
+		})
+		return cityData
+		// const filterData = citys.filter(item => item.citysName.includes(key))
+		// return [...cityData, ...filterData]
+	}, [])
+	ctx.body = {
+		isSuccess: true,
+		data: {
+			cityData,
+			searchKey: key,
+		},
 	}
 })
 app.use(router.routes()).use(router.allowedMethods())
