@@ -2,15 +2,16 @@ import React, { useState, useCallback, useMemo } from 'react'
 import './style/App.css'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { exchangeFromTo, showCitySelector, hideCitySelector, fetchCityData, setSelectedCity, showDateSelector } from './actions'
+import { exchangeFromTo, showCitySelector, hideCitySelector, fetchCityData, setSelectedCity, showDateSelector, hideDateSelector, setDepartDate } from './actions'
 import Header from '../common/Header'
 import Journey from './Journey'
 import DepartDate from './DepartDate'
 import HighSpeed from './HighSpeed'
 import Submit from './Submit'
 import CitySelector from '../common/CitySelector'
+import DateSelector from '../common/DateSelector'
 function App(props) {
-	const { from, to, isCitySelectorVisible, cityData, isLoadingCityData, dispatch, departDate } = props
+	const { from, to, isCitySelectorVisible, cityData, isLoadingCityData, dispatch, departDate, isDateSelectorVisible } = props
 	const onBack = useCallback(() => {
 		window.history.back()
 	}, [])
@@ -35,6 +36,9 @@ function App(props) {
 			dispatch
 		)
 	}, [])
+	const dateSelectorCbs = useMemo(() => {
+		return bindActionCreators({ onBack: hideDateSelector, onSelect: setDepartDate }, dispatch)
+	}, [])
 	// const onSelect = name => {
 	// 	citySelectorCbs.setSelectedCity(name)
 	// 	citySelectorCbs.onBack()
@@ -53,6 +57,8 @@ function App(props) {
 				<Submit />
 			</form>
 			<CitySelector show={isCitySelectorVisible} cityData={cityData} isLoading={isLoadingCityData} {...citySelectorCbs} />
+
+			<DateSelector show={isDateSelectorVisible} {...dateSelectorCbs} />
 		</div>
 	)
 }
