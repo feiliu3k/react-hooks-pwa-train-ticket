@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react'
 import './style/App.css'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { exchangeFromTo, showCitySelector, hideCitySelector, fetchCityData, setSelectedCity, showDateSelector, hideDateSelector, setDepartDate } from './actions'
+import { exchangeFromTo, showCitySelector, hideCitySelector, fetchCityData, setSelectedCity, showDateSelector, hideDateSelector, setDepartDate, toggleHighSpeed } from './actions'
 import Header from '../common/Header'
 import Journey from './Journey'
 import DepartDate from './DepartDate'
@@ -13,7 +13,7 @@ import DateSelector from '../common/DateSelector'
 import { h0 } from '../common/fp'
 
 function App(props) {
-	const { from, to, isCitySelectorVisible, cityData, isLoadingCityData, dispatch, departDate, isDateSelectorVisible } = props
+	const { from, to, isCitySelectorVisible, cityData, isLoadingCityData, dispatch, departDate, isDateSelectorVisible, highSpeed } = props
 	const onBack = useCallback(() => {
 		window.history.back()
 	}, [])
@@ -41,12 +41,19 @@ function App(props) {
 	const dateSelectorCbs = useMemo(() => {
 		return bindActionCreators({ onBack: hideDateSelector, onSelect: setDepartDate }, dispatch)
 	}, [])
+	const highSpeedCbs = useMemo(() => {
+		return bindActionCreators(
+			{
+				toggle: toggleHighSpeed,
+			},
+			dispatch
+		)
+	}, [])
 	// const onSelect = name => {
 	// 	citySelectorCbs.setSelectedCity(name)
 	// 	citySelectorCbs.onBack()
 	// }
 	const onSelectDate = useCallback(day => {
-		console.log(day)
 		if (!day) {
 			return
 		}
@@ -62,11 +69,11 @@ function App(props) {
 				<Header title='biaoti ' onBack={onBack} />
 			</div>
 			{/* <button onClick={() => setCount(count + 1)}>{count}</button> */}
-			<form className='form'>
+			<form className='form' action='./query.html'>
 				{/* <Journey from={from} to={to} exchangeFromTo={doExChangeFromTo} showCitySelector={doShowCitySelector} /> */}
 				<Journey from={from} to={to} {...cbs} />
 				<DepartDate time={departDate} {...datepartSelectorCbs} />
-				<HighSpeed />
+				<HighSpeed highSpeed={highSpeed} {...highSpeedCbs} />
 				<Submit />
 			</form>
 			<CitySelector show={isCitySelectorVisible} cityData={cityData} isLoading={isLoadingCityData} {...citySelectorCbs} />

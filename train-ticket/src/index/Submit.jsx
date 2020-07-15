@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import './style/Submit.css'
 
-export default function Submit() {
-	return <div></div>
-}
+export default memo(function Submit() {
+	return (
+		<div className='submit'>
+			<button type='submit' className='submit-button'>
+				搜索
+			</button>
+		</div>
+	)
+})
