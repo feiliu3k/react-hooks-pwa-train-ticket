@@ -10,6 +10,8 @@ import HighSpeed from './HighSpeed'
 import Submit from './Submit'
 import CitySelector from '../common/CitySelector'
 import DateSelector from '../common/DateSelector'
+import { h0 } from '../common/fp'
+
 function App(props) {
 	const { from, to, isCitySelectorVisible, cityData, isLoadingCityData, dispatch, departDate, isDateSelectorVisible } = props
 	const onBack = useCallback(() => {
@@ -43,6 +45,17 @@ function App(props) {
 	// 	citySelectorCbs.setSelectedCity(name)
 	// 	citySelectorCbs.onBack()
 	// }
+	const onSelectDate = useCallback(day => {
+		console.log(day)
+		if (!day) {
+			return
+		}
+		if (day < h0()) {
+			return
+		}
+		dispatch(setDepartDate(day))
+		dispatch(hideDateSelector())
+	}, [])
 	return (
 		<div>
 			<div className='header-wrapper'>
@@ -58,7 +71,7 @@ function App(props) {
 			</form>
 			<CitySelector show={isCitySelectorVisible} cityData={cityData} isLoading={isLoadingCityData} {...citySelectorCbs} />
 
-			<DateSelector show={isDateSelectorVisible} {...dateSelectorCbs} />
+			<DateSelector show={isDateSelectorVisible} {...dateSelectorCbs} onSelect={onSelectDate} />
 		</div>
 	)
 }

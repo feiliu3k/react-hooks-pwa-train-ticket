@@ -3,7 +3,48 @@ import './style/DateSelector.css'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Header from './Header'
+import { h0 } from './fp'
 
+function Day(props) {
+	const { day, onSelect } = props
+	if (!day) {
+		return <td className='null'></td>
+	}
+	const classes = []
+	const now = h0()
+	// 已过期类名
+	if (day < now) {
+		classes.push('disabled')
+	}
+	// 周六周日类名
+	if ([6, 0].includes(new Date(day).getDay())) {
+		classes.push('weekend')
+	}
+	const dateString = now === day ? '今天' : new Date(day).getDate()
+	return (
+		<td className={classNames(classes)} onClick={() => onSelect(day)}>
+			{dateString}
+		</td>
+	)
+}
+Day.propTypes = {
+	day: PropTypes.number,
+	onSelect: PropTypes.func.isRequired,
+}
+function Week(props) {
+	const { days, onSelect } = props
+	return (
+		<tr className='date-table-days'>
+			{days.map((day, idx) => {
+				return <Day key={idx} day={day} onSelect={onSelect} />
+			})}
+		</tr>
+	)
+}
+Week.propTypes = {
+	days: PropTypes.array.isRequired,
+	onSelect: PropTypes.func.isRequired,
+}
 function Month(props) {
 	const { startingTimeInMonth, onSelect } = props
 	const startDay = new Date(startingTimeInMonth)
@@ -44,6 +85,9 @@ function Month(props) {
 					<th className='weekend'>周六</th>
 					<th className='weekend'>周日</th>
 				</tr>
+				{weeks.map((week, idx) => {
+					return <Week key={idx} days={week} onSelect={onSelect} />
+				})}
 			</tbody>
 		</table>
 	)

@@ -9,11 +9,15 @@
 }
 .date-selector-tables {
 	padding: 12px;
+	height: calc(100vh - 44px);
+	overflow-y: scroll;
 }
 .date-table {
 	width: 100%;
 	margin-bottom: 12px;
+	border-collapse: collapse;
 }
+
 .date-table h5 {
 	line-height: 36px;
 	height: 36px;
@@ -22,6 +26,37 @@
 	font-weight: 500;
 	background-color: #fff;
 	border: 1px solid #cecece;
+}
+.date-table-weeks {
+	line-height: 34px;
+}
+.date-table-days {
+	line-height: 34px;
+	font-size: 0;
+}
+tbody {
+	border-right: 1px solid #804040;
+
+	border-bottom: 1px solid #804040;
+}
+tbody td {
+	border-left: 1px solid #804040;
+
+	border-top: 1px solid #804040;
+}
+.date-table-days td {
+	text-align: center;
+	font-size: 14px;
+}
+
+.date-table-days .null {
+	background-color: #b5b0b0;
+}
+.date-table-days .disabled {
+	background-color: #dedede;
+}
+.date-table-days .weekend {
+	color: #f9c60e;
 }
 .weekend {
 	color: #f9c60e;
