@@ -17,7 +17,7 @@ const initialState = {
 	cityData: null,
 	isLoadingCityData: false,
 	isDateSelectorVisible: false,
-	departDate: 0,
+	departDate: Date.now(), // 默认当前时间
 	highSpeed: false, // 是否选择了高铁动车
 }
 
